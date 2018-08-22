@@ -5,6 +5,8 @@ error_reporting(E_ALL&~E_NOTICE);
 
 强制转换（显式转换）
     临时转换
+        //null转换成数组是空数组
+        (int)$username
         intval($username)
     永久转换
         settype($var,$type) //设置变量类型
