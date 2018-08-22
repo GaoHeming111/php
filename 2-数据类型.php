@@ -26,6 +26,7 @@ error_reporting(E_ALL&~E_NOTICE);
     8.空
             $var = 1;
             unset($var) //销毁变量
+                        //但是要注意: unset并没有真正销毁变量的作用...仅仅是切断了变量与内存之间的关系，内存只要还被引用着就不会被释放; 
             type of($var) //null
 //5种伪类型
         number
