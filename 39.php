@@ -1,4 +1,5 @@
 <?php
+// -文件读写函数封装
 /** 
  *读取文件内容，返回字符串
 */
@@ -88,6 +89,9 @@ var_dump(write_file1('./static/a/222.txt','gaoheming111'));
 
 
 
+
+
+
 /** 
  *截断内容到指定大小
 */
@@ -105,3 +109,32 @@ function truncate_file($filename,$length){
     }
 }
 var_dump(truncate_file('./static/a/222.txt',3));
+
+
+
+
+
+/** 
+ *下载文件
+*/
+function down_file($filename,$allowDownExt=array('jpg','jpeg','gif','txt','png','html','rar','zip')){
+    if(!is_file($filename) || !is_readable($filename)){
+        return false;
+    }else{
+        // 检测文件类型是否允许下载
+        // 将字符串转化为小写
+        $ext = strtolower(pathinfo($filename,PATHINFO_EXTENSION));
+        if(!in_array($ext,$allowDownExt)){
+            return false;
+        }else{
+            // 通过header()发送头信息
+            header('content-type:application/octet-stream'); //告诉浏览器输出的是字节流
+            header('Accept-Ranges:bytes'); //告诉浏览器返回的文件大小是按字节进行计算的
+            header('Accept-Length:'.filesize($filename));//告诉浏览器返回的文件大小
+            header('Content-Disposition:attachment;filename=king_'.basename($filename));//告诉浏览器文件作为附件处理，告诉浏览器最终下载完的文件名称
+            readfile($filename);//读取文件内容
+            exit;
+        }
+    }
+}
+echo 11;
