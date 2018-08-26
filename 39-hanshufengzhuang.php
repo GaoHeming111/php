@@ -219,3 +219,78 @@ function upload_file($fileInfo,$uploadPath='./uploads',$imageFlag=true,$allowExt
         return false;
     }
 }
+
+
+
+
+/** 
+ *压缩单个文件
+*/
+function zip_file($filename){
+    if(!is_file($filename)){
+        return false;
+    }
+    $zip = new ZipArchive();
+    $zipName = basename($filename).'.zip';
+    // 打开指定压缩包，不存在则创建，存在则覆盖
+    if($zip->open($zipName,ZipArchive::CREATE|ZipArchive::OVERWRITE)){
+        // 将文件添加到压缩包中
+        $zip->addFile($filename);
+        $zip->close();
+        return true;
+    }else {
+        return false;
+    }
+}
+// var_dump(zip_file('./static/a/222.txt'));
+
+
+/** 
+ *压缩多个文件
+*/
+function zip_files($zipName,...$files){
+    // 检测压缩包名称是否正确
+    $zipExt = strtolower(pathinfo($zipName,PATHINFO_EXTENSION));
+    if('zip'!==$zipExt){
+        return false;
+    }
+    $zip = new ZipArchive();
+                            // ::它用来置顶类中不同作用域的级别
+    if($zip->open($zipName,ZipArchive::CREATE|ZipArchive::OVERWRITE)){
+        foreach($files as $file){
+            if(is_file($file)){
+                $zip->addFile($file);
+            }
+        }
+        $zip->close();
+        return true;
+    }else{
+        return false;
+    }
+}
+var_dump(zip_files('test.zip','1.php','5.php','7.php'));
+
+
+
+/** 
+ *解压多个文件
+*/
+function unzip_file($zipName,$dest){
+    // 检测要解压的压缩包是否存在
+    if(!is_file($zipName)){
+        return false;
+    }
+    // 检测目标路径是否存在
+    if(!is_dir($dest)){
+        mkdir($dest,0777,true);
+    }
+    $zip = new ZipArchive();
+    if($zip->open($zipName)){
+        $zip->extractTo($dest);
+        $zip->close();
+        return true;
+    }else{
+        return false;
+    }
+}
+var_dump(unzip_file('./static/a/1.zip','./static/a'));
