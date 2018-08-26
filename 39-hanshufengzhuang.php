@@ -137,4 +137,85 @@ function down_file($filename,$allowDownExt=array('jpg','jpeg','gif','txt','png',
         }
     }
 }
-echo 11;
+
+
+
+/** 
+ *上传文件,上传文件的信息是一个数组，
+*/
+function upload_file($fileInfo,$uploadPath='./uploads',$imageFlag=true,$allowExt=array('jpeg','jpg','gif','png'),$maxSize=2097152){
+    define('UPLOAD_ERRS',[
+        'upload_max_filesize'=>'超过了php选项配置中upload_max_filesize的值',
+        'form_max_size'=>'超过了表单form_max_size选项的值',
+        'upload_file_partial'=>'文件部分上传',
+        'no_upload_file_select'=>'没有选择上传文件',
+        'upload_system_error'=>'系统错误',
+        'no_allow_ext'=>'非法文件类型',
+        'exceed_max_size'=>'超出允许上传的最大值',
+        'not_true_image'=>'文件不是真实图片',
+        'not_http_post'=>'文件不是通过http post形式上传上来的',
+        'move_error'=>'文件移动失败'
+
+    ]);
+    // 检测文件上传是否有错误
+    if($fileInfo['error']===UPLOAD_ERR_OK){
+        // 检测上传文件类型                             规定要返回的数组元素
+        $ext = strtolower(pathinfo($fileInfo['name'],PATHINFO_EXTENSION));
+        if(!in_array($ext,$allowExt)){
+            echo UPLOAD_ERRS['no_allow_ext'];
+            return false;
+        }
+        // 检测上传文件大小是否符号规范
+        if($fileInfo['size']>$maxSize){
+            echo UPLOAD_ERRS['exceed_max_size'];
+            return false;
+        }
+        // 检测是否是真实图片
+        if($imageFlag){
+            if(@!getimagesize($fileInfo['tmp_name'])){
+                echo UPLOAD_ERRS['not_true_image'];
+                return false;
+            }
+        }
+        // 检测文件是否通过HTTP post形式上传来的
+        if(!is_uploaded_file($fileInfo['tmp_name'])){
+            return UPLOAD_ERRS['not_http_post'];
+        }
+        //检测目标目录是否存在，不存在则创建
+        if(!is_dir($uploadPath)){
+            mkdir($uploadPath,0777,true);
+        }
+        // 生成唯一文件名，防止重命名产生覆盖
+        $uniName = md5(uniqid(microtime(true),true)).'.'.$ext;
+        $dest = $uploadPath.DIRECTORY_SEPARATOR.$uniName;
+        // 移动文件
+        if(@!move_uploaded_file($fileInfo['tmp_name'],$dest)){
+            echo UPLOAD_ERRS['move_error'];
+            return false;
+        }
+        echo '文件上传成功';
+        return $dest;
+    }else{
+        switch($fileInfo['error']){
+            case 1:
+            $mes = UPLOAD_ERRS['upload_max_filesize'];
+            break;
+            case 2:
+            $mes = UPLOAD_ERRS['form_max_size'];
+            break;
+            case 3:
+            $mes = UPLOAD_ERRS['upload_file_partial'];
+            break;
+            case 4:
+            $mes = UPLOAD_ERRS['no_upload_file_select'];
+            break;
+            case6:
+            case7:
+            case8:
+            $mes = UPLOAD_ERRS['upload_system_error'];
+            break;
+        }
+        echo $mes;
+        return false;
+    }
+}

@@ -10,5 +10,11 @@
     <a href="http://localhost/static/a/1.zip">下载1.zip</a>
     <br>
     <a href="39-download.php?filename=./static/a/2.zip">下载2.zip</a>
+
+    <h2>文件上传</h2>
+    <form action="39-doUpload.php" method="POST" enctype="multipart/form-data">
+        <input type="file" name="myFile" id="">
+        <input type="submit" value="上传">
+    </form>
 </body>
 </html>
