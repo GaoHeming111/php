@@ -13,6 +13,7 @@
     CREATE DATABASE IF NOT EXISTS test1 DEFAULT CHARACTER SET 'UTF8'; //创建数据库的同时指定编码方式
     SHOW CREATE DATABASE test1; //查看数据库test1的详细信息
     ALTER DATABASE test1 DEFAULT CHARACTER SET 'UTF8'; //修改数据库的编码方式
+    ALTER TABLE user6 RENAME TO user666;//修改数据表的名字
 
 二。数据表相关操作
     数据类型：数值型（整数型，浮点数，定点数）；字符串型；日期时间型
