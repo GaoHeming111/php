@@ -5,6 +5,9 @@
     SELECT DATABASE(); //得到当前打开的数据库
     CREATE DATABASE test1; //test1是数据库的名字
     SHOW DATABASES; //查看所有的数据库
+    SHOW TABLES; //查看当前数据库下已有的数据表
+    SHOW CREATE TABLE imooc_user;//查看指定数据表的相信信息
+    DESC imooc_user;//查看指定数据表的名字
     CREATE DATABASE IF NOT EXISTS test1; //先检测数据库是否存在，不存在则创建
     SHOW WARNINGS; //查看上一步操作弹出的警告
     CREATE DATABASE IF NOT EXISTS test1 DEFAULT CHARACTER SET 'UTF8'; //创建数据库的同时指定编码方式
