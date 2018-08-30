@@ -42,3 +42,8 @@
         --------LIMIT 5，8；从5开始，要8个
         --------假设每页20个数据，第n页：LIMIT （n-1）*20，20
         --------子句是有顺序的-----WHERE(筛选)--- GROUP(合并)--- ORDER(排序)--- LIMIT(限制)
+四。多表查询
+    （1）内连接形式（用的比较多）：SELECT 字段名称 FROM tbl_name1 INNER JOIN tbl_name2 ON 连接条件
+    （2）外连接形式：
+        左外连接：SELECT 字段名称 FROM tbl_name1 LEFT OUTER  JOIN tbl_name2 ON 连接条件; //先查询左表中的全部记录，再去右表中查询符合条件的记录，不符合的以null代替
+        右外连接：SELECT 字段名称 FROM tbl_name1 RIGHT OUTER JOIN tbl_name2 ON 连接条件;
