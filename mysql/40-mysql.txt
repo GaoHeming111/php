@@ -17,3 +17,28 @@
 
 二。数据表相关操作
     数据类型：数值型（整数型，浮点数，定点数）；字符串型；日期时间型
+
+三。增删改查
+    增加：INSERT user VALUE(); //不指定字段名称
+         INSERT user() VALUES(); //指定字段名称
+    SQL:结构化查询语句，所有数据库操作的基础，即数据库只听得懂SQL，有四大语句--增删改查，关键字大写
+        增--insert------INSERT INTO `user_table`(`ID`,`username`,`password`) VALUES(0,"blue2","678787");
+        删--delete-------DELETE FROM 表 WHERE 条件	
+        改--update-------UPDATE 表 SET 字段=值，字段=值 WHERE 条件
+        查--select-------SELECT * FROM `user_table`
+        子句：
+        1.WHERE条件 
+        ---------WHERE age>=18 AND/OR  score>100
+        2.ORDER排序
+        ORDER BY age ASC/DESC
+        ---------ASC升序 DESC降序
+        ---------价格升序排序，如果价格相同，在按销量降序排序-----ORDER BY price ASC,sales DESC
+        3.GROUP 聚类--合并相同的
+        ---------统计每个班的人数----SELECT class,COUNT(class) FROM student_table GROUP BY class
+        ---------计算每个班级的平均分-----SELECT class,AVG(score) FROM student_table GROUP BY class
+        ---------计算每个班级的最高分和最低分-------SELECT class,MAX(score),MIN(score) FROM student_table GROUP BY class
+        4.LIMIT---限制输出，常用来分页
+        --------LIMIT 10;前十条
+        --------LIMIT 5，8；从5开始，要8个
+        --------假设每页20个数据，第n页：LIMIT （n-1）*20，20
+        --------子句是有顺序的-----WHERE(筛选)--- GROUP(合并)--- ORDER(排序)--- LIMIT(限制)
