@@ -5,5 +5,10 @@ Mysql方式连接数据库
         mysql_select_db($database_name);
     3.设置字符集
         mysql_set_charset($charset);
+
 Mysql方式执行SQL语句
-    1.mysql_query($query);
+    1.mysql_query($query); //返回true或false
+
+Mysql方式获取结果集
+    1.mysql_query($query) //执行成功返回一个resource,执行错误返回一个false
+      返回的结果资源应该传递给mysql_fetch_array($result)和其他函数来处理结果表，并取出返回的结果
