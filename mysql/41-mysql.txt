@@ -1,0 +1,9 @@
+Mysql方式连接数据库
+    1。连接数据库
+        mysql_connect($server,$username,$password)
+    2.选择数据库
+        mysql_select_db($database_name);
+    3.设置字符集
+        mysql_set_charset($charset);
+Mysql方式执行SQL语句
+    1.mysql_query($query);
